@@ -1,0 +1,144 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "System user profiles and permission roles.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "The Firebase Authentication unique user ID."
+        },
+        "name": {
+          "type": "string",
+          "description": "Full name of the user."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Email address matching authentication records."
+        },
+        "role": {
+          "type": "string",
+          "enum": ["super_admin", "user"],
+          "description": "Systems role. Access restricted to authorized operators only."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO timestamp of account generation."
+        }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "TourismSite": {
+      "title": "Tourism Site",
+      "description": "A cultural, natural, or historical landmark asset registered and managed via Hawassa Super Admin Command center.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique auto-generated identifier."
+        },
+        "name": {
+          "type": "string",
+          "description": "Descriptive localized legal name of landmark."
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed public highlight commentary."
+        },
+        "category": {
+          "type": "string",
+          "enum": ["Nature", "Culture", "Monuments"],
+          "description": "Specific categoric segment."
+        },
+        "history": {
+          "type": "string",
+          "description": "Backstory profile of Sidaamu traditions."
+        },
+        "photoUrl": {
+          "type": "string",
+          "description": "Visual illustration link."
+        },
+        "videoUrl": {
+          "type": "string",
+          "description": "Promotional media stream link."
+        },
+        "coords": {
+          "type": "object",
+          "description": "Geographical coordinate mapping percentages."
+        },
+        "views": {
+          "type": "number",
+          "description": "Municipal site traffic analytics count."
+        },
+        "rating": {
+          "type": "number",
+          "description": "Tourist response score evaluation aggregation."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO generation timestamp."
+        }
+      },
+      "required": ["name", "category"]
+    },
+    "TaxiDriver": {
+      "title": "Taxi Driver",
+      "description": "Sidaamu Smart Taxi Fleet Driver registered and tracked in Hawassa City.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "taxiId": { "type": "string" },
+        "plateNumber": { "type": "string" },
+        "licenseNumber": { "type": "string" },
+        "liveLatitude": { "type": "number" },
+        "liveLongitude": { "type": "number" },
+        "active": { "type": "boolean" },
+        "fareRate": { "type": "number" },
+        "rating": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "plateNumber", "active"]
+    },
+    "EcoShineLocation": {
+      "title": "Eco-Shine Location",
+      "description": "Solar-powered shoe shine and sanitation station deployed in Hawassa.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "workerName": { "type": "string" },
+        "batteryStatus": { "type": "number" },
+        "solarGeneration": { "type": "number" },
+        "waterFiltration": { "type": "number" },
+        "status": { "type": "string", "enum": ["Online", "Offline", "Maintenance"] },
+        "currentBookingsCount": { "type": "number" },
+        "revenueToday": { "type": "number" }
+      },
+      "required": ["name", "workerName", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{uid}": {
+      "schema": "#/entities/User",
+      "description": "User profiles database partitioned by UID."
+    },
+    "/tourism_sites/{siteId}": {
+      "schema": "#/entities/TourismSite",
+      "description": "Public and Operator managed directory of landmarks."
+    },
+    "/taxi_drivers/{driverId}": {
+      "schema": "#/entities/TaxiDriver",
+      "description": "Sidaamu Taxi Fleet Drivers directory."
+    },
+    "/eco_shine_locations/{locationId}": {
+      "schema": "#/entities/EcoShineLocation",
+      "description": "Smart shoe shine stations directory."
+    }
+  }
+}

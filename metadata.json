@@ -1,0 +1,6 @@
+{
+  "name": "Sidaama Way Go – Hawassa Smart City Platform",
+  "description": "Comprehensive full-stack Smart City Platform for Hawassa City Administration featuring GIS Maps, Transportation Terminal Dashboards, Taxi tracking, Tourism, Hotels, Pharmacy, Emergency Response, and Multilingual Gemini AI integration.",
+  "requestFramePermissions": ["geolocation", "camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

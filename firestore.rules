@@ -1,0 +1,79 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper to determine if user is logged in
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // Helper to fetch the authenticated user's profile metadata from Firestore
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    // Helper to determine if the user has the elevated super_admin role
+    function isSuperAdmin() {
+      return isSignedIn() && (
+        getUserData().role == "super_admin" || 
+        request.auth.token.email == "admin@hawassa.gov.et"
+      );
+    }
+
+    // Rules for User documents
+    match /users/{uid} {
+      // Users can read their own profile; super_admins can read all profiles
+      allow read: if isSignedIn() && (request.auth.uid == uid || isSuperAdmin());
+      
+      // Let any user create or update their own profile; prevent raw privilege escalation to super_admin unless bootstrapping or already super_admin
+      allow create, update: if isSignedIn() && (
+        request.auth.uid == uid && (
+          // Standard users cannot change their role to super_admin
+          (request.resource.data.role == "user" && (!exists(/databases/$(database)/documents/users/$(uid)) || resource.data.role != "super_admin")) ||
+          // Auto-bootstrap admin account can claim super_admin
+          request.auth.token.email == "admin@hawassa.gov.et" ||
+          // Admin can already edit
+          isSuperAdmin()
+        )
+      );
+      
+      // Only super_admins can delete accounts
+      allow delete: if isSuperAdmin();
+    }
+
+    // Rules for Tourism Sites
+    match /tourism_sites/{siteId} {
+      // Anyone can read landmarks of Hawassa
+      allow read: if true;
+      
+      // Only operators with super_admin clearance can create, update, or delete landmarks
+      allow create, write, update, delete: if isSuperAdmin();
+    }
+
+    // Rules for Taxi Drivers
+    match /taxi_drivers/{driverId} {
+      allow read: if true;
+      allow create, write, update, delete: if true;
+    }
+
+    // Rules for Eco-Shine Locations
+    match /eco_shine_locations/{locationId} {
+      allow read: if true;
+      allow create, write, update, delete: if true;
+    }
+
+    // Rules for generic municipal database collections
+    match /routes/{id} { allow read: if true; allow write: if true; }
+    match /vehicles/{id} { allow read: if true; allow write: if true; }
+    match /drivers/{id} { allow read: if true; allow write: if true; }
+    match /schedules/{id} { allow read: if true; allow write: if true; }
+    match /tickets/{id} { allow read: if true; allow write: if true; }
+    match /payments/{id} { allow read: if true; allow write: if true; }
+    match /hospitals/{id} { allow read: if true; allow write: if true; }
+    match /pharmacies/{id} { allow read: if true; allow write: if true; }
+    match /emergency_requests/{id} { allow read: if true; allow write: if true; }
+    match /taxi_queue/{id} { allow read: if true; allow write: if true; }
+    match /notifications/{id} { allow read: if true; allow write: if true; }
+    match /reports/{id} { allow read: if true; allow write: if true; }
+  }
+}
