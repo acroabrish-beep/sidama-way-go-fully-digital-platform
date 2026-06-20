@@ -8,6 +8,13 @@ import Login from "./components/Login";
 import AdminDashboard from "./components/AdminDashboard";
 import SuperAdminCommand from "./components/SuperAdminCommand";
 import AdminDashboardDemo from "./components/AdminDashboard";
+import { TransportationModule } from "./components/TransportationModule";
+import { TaxiModule } from "./components/TaxiModule";
+import { TourismModule } from "./components/TourismModule";
+import { HealthcareModule } from "./components/HealthcareModule";
+import { EmergencyModule } from "./components/EmergencyModule";
+import { SmartMap } from "./components/SmartMap";
+import { AICommandCenter } from "./components/AICommandCenter";
 
 // Custom security route protector for Super Admins
 function AdminProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -92,6 +99,15 @@ export default function App() {
 
             {/* Demo route for preview - remove in production */}
             <Route path="/admin-dashboard-demo" element={<AdminDashboardDemo />} />
+
+            {/* Module Demo Routes */}
+            <Route path="/transportation" element={<TransportationModule />} />
+            <Route path="/taxi" element={<TaxiModule />} />
+            <Route path="/tourism" element={<TourismModule />} />
+            <Route path="/healthcare" element={<HealthcareModule />} />
+            <Route path="/emergency" element={<EmergencyModule />} />
+            <Route path="/smart-map" element={<SmartMap />} />
+            <Route path="/ai-command" element={<AICommandCenter />} />
 
             {/* Fallback wildcard to prevent broken links */}
             <Route path="*" element={<Navigate to="/" replace />} />
