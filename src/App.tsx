@@ -15,6 +15,7 @@ import { HealthcareModule } from "./components/HealthcareModule";
 import { EmergencyModule } from "./components/EmergencyModule";
 import { SmartMap } from "./components/SmartMap";
 import { AICommandCenter } from "./components/AICommandCenter";
+import { SuperAdminDashboard } from "./components/SuperAdminDashboard";
 
 // Custom security route protector for Super Admins
 function AdminProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -108,6 +109,7 @@ export default function App() {
             <Route path="/emergency" element={<EmergencyModule />} />
             <Route path="/smart-map" element={<SmartMap />} />
             <Route path="/ai-command" element={<AICommandCenter />} />
+            <Route path="/super-admin" element={<SuperAdminDashboard />} />
 
             {/* Fallback wildcard to prevent broken links */}
             <Route path="*" element={<Navigate to="/" replace />} />
