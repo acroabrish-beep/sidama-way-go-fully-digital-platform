@@ -1,11 +1,13 @@
 import React from "react";
 import { HashRouter as Router, Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
-import Welcome from "./components/Welcome";
+import LandingPage from "./components/LandingPage";
 import UserLogin from "./components/UserLogin";
 import UserDashboard from "./components/UserDashboard";
 import Login from "./components/Login";
+import AdminDashboard from "./components/AdminDashboard";
 import SuperAdminCommand from "./components/SuperAdminCommand";
+import AdminDashboardDemo from "./components/AdminDashboard";
 
 // Custom security route protector for Super Admins
 function AdminProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -63,8 +65,8 @@ export default function App() {
       <AuthProvider>
         <div className="bg-slate-950 min-h-screen text-slate-100 selection:bg-teal-500/30">
           <Routes>
-            {/* 1. Main Welcome Landing Page */}
-            <Route path="/" element={<Welcome />} />
+            {/* 1. Main Landing Page */}
+            <Route path="/" element={<LandingPage />} />
 
             {/* 2. Citizens Portal Auth and Dashboard routes */}
             <Route path="/user-login" element={<UserLogin />} />
@@ -77,16 +79,19 @@ export default function App() {
               } 
             />
 
-            {/* 3. Super Admin Command Center auth and console routes */}
+            {/* 3. Admin Dashboard and auth routes */}
             <Route path="/admin-login" element={<AdminLoginWrapper />} />
             <Route 
               path="/admin-dashboard" 
               element={
                 <AdminProtectedRoute>
-                  <SuperAdminCommand />
+                  <AdminDashboard />
                 </AdminProtectedRoute>
               } 
             />
+
+            {/* Demo route for preview - remove in production */}
+            <Route path="/admin-dashboard-demo" element={<AdminDashboardDemo />} />
 
             {/* Fallback wildcard to prevent broken links */}
             <Route path="*" element={<Navigate to="/" replace />} />
