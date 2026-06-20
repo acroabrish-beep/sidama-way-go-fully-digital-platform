@@ -8,15 +8,8 @@ import Login from "./components/Login";
 import AdminDashboard from "./components/AdminDashboard";
 import SuperAdminCommand from "./components/SuperAdminCommand";
 import AdminDashboardDemo from "./components/AdminDashboard";
-import { TransportationModule } from "./components/TransportationModule";
-import { TaxiModule } from "./components/TaxiModule";
-import { TourismModule } from "./components/TourismModule";
-import { HealthcareModule } from "./components/HealthcareModule";
-import { EmergencyModule } from "./components/EmergencyModule";
-import { SmartMap } from "./components/SmartMap";
-import { AICommandCenter } from "./components/AICommandCenter";
-import { SuperAdminDashboard } from "./components/SuperAdminDashboard";
-import { AnalyticsReporting } from "./components/AnalyticsReporting";
+import SmartCityDashboard from "./components/SmartCityDashboard";
+
 
 // Custom security route protector for Super Admins
 function AdminProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -99,19 +92,9 @@ export default function App() {
               } 
             />
 
-            {/* Demo route for preview - remove in production */}
+            {/* Demo routes */}
             <Route path="/admin-dashboard-demo" element={<AdminDashboardDemo />} />
-
-            {/* Module Demo Routes */}
-            <Route path="/transportation" element={<TransportationModule />} />
-            <Route path="/taxi" element={<TaxiModule />} />
-            <Route path="/tourism" element={<TourismModule />} />
-            <Route path="/healthcare" element={<HealthcareModule />} />
-            <Route path="/emergency" element={<EmergencyModule />} />
-            <Route path="/smart-map" element={<SmartMap />} />
-            <Route path="/ai-command" element={<AICommandCenter />} />
-            <Route path="/super-admin" element={<SuperAdminDashboard />} />
-            <Route path="/analytics" element={<AnalyticsReporting />} />
+            <Route path="/smart-city" element={<SmartCityDashboard />} />
 
             {/* Fallback wildcard to prevent broken links */}
             <Route path="*" element={<Navigate to="/" replace />} />

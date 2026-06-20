@@ -28,6 +28,12 @@ export default function LandingPage() {
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center gap-4">
             <button 
+              onClick={() => navigate('/smart-city')}
+              className="px-6 py-2 text-foreground hover:text-primary transition-colors"
+            >
+              Live Platform
+            </button>
+            <button 
               onClick={() => navigate('/user-login')}
               className="px-6 py-2 text-foreground hover:text-primary transition-colors"
             >
